@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to your Recipe Planner account.">
+  <title>Recipe Planner | Login</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-emerald-50 font-sans text-slate-800">
+
+  <main class="flex min-h-screen items-center justify-center px-4 py-10">
+    <section class="w-full max-w-md rounded-3xl bg-white p-8 shadow-xl shadow-emerald-900/10 sm:p-10">
+
+      <div class="mb-5 flex justify-center">
+        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-4xl">
+          🍲
+        </div>
+      </div>
+
+      <h1 class="text-center text-3xl font-extrabold tracking-tight text-emerald-900">
+        Recipe Planner
+      </h1>
+
+      <p class="mt-3 text-center text-sm leading-6 text-slate-500">
+        Your next delicious meal starts here.
+      </p>
+
+      <form id="login-form" class="mt-8 space-y-5">
+
+        <div>
+          <label for="email" class="mb-2 block text-sm font-semibold text-slate-700">
+            Email address
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="alex@example.com"
+            autocomplete="username"
+            required
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+          >
+        </div>
+
+        <div>
+          <label for="password" class="mb-2 block text-sm font-semibold text-slate-700">
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+          >
+        </div>
+
+        <p
+          id="error-message"
+          role="alert"
+          aria-live="polite"
+          class="hidden rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+        ></p>
+
+        <button
+          type="submit"
+          class="w-full rounded-xl bg-emerald-700 px-4 py-3.5 font-bold text-white shadow-lg shadow-emerald-700/20 transition hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200 active:scale-[0.99]"
+        >
+          Sign In
+        </button>
+      </form>
+
+      <section
+        id="dashboard"
+        hidden
+        aria-live="polite"
+        class="mt-8 rounded-2xl border border-emerald-100 bg-emerald-50 p-6 text-center"
+      >
+        <div class="mb-3 text-4xl">👋</div>
+
+        <h2 id="welcome-message" class="text-xl font-bold text-emerald-900">
+          Welcome!
+        </h2>
+
+        <p class="mt-2 text-sm leading-6 text-slate-600">
+          You have successfully signed in to Recipe Planner.
+        </p>
+
+        <button
+          type="button"
+          id="logout-button"
+          class="mt-5 w-full rounded-xl border border-emerald-700 px-4 py-3 font-semibold text-emerald-800 transition hover:bg-emerald-100 focus:outline-none focus:ring-4 focus:ring-emerald-200"
+        >
+          Log Out
+        </button>
+      </section>
+
+      <div class="mt-8 rounded-xl bg-slate-50 p-4">
+        <p class="text-center text-xs font-bold uppercase tracking-wider text-slate-500">
+          Demo account
+        </p>
+
+        <p class="mt-2 text-center text-sm text-slate-600">
+          Email: alex@example.com
+        </p>
+
+        <p class="mt-1 text-center text-sm text-slate-600">
+          Password: recipe123
+        </p>
+      </div>
+
+      <p class="mt-6 text-center text-xs text-slate-400">
+        © 2026 Recipe Planner. Plan meals, eat better.
+      </p>
+
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const users = [
+      {
+        email: "alex@example.com",
+        password: "recipe123",
+        name: "Alex"
+      },
+      {
+        email: "maya@example.com",
+        password: "meal456",
+        name: "Maya"
+      },
+      {
+        email: "sam@example.com",
+        password: "food789",
+        name: "Sam"
+      }
+    ];
+
+    const loginForm = document.getElementById("login-form");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const errorMessage = document.getElementById("error-message");
+    const dashboard = document.getElementById("dashboard");
+    const welcomeMessage = document.getElementById("welcome-message");
+    const logoutButton = document.getElementById("logout-button");
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.toggle("hidden", !message);
+    }
+
+    loginForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const email = emailInput.value.trim().toLowerCase();
+      const password = passwordInput.value;
+
+      const matchedUser = users.find(function (user) {
+        return user.email === email && user.password === password;
+      });
+
+      if (matchedUser) {
+        showError("");
+
+        welcomeMessage.textContent = "Welcome, " + matchedUser.name + "!";
+
+        loginForm.hidden = true;
+        dashboard.hidden = false;
+      } else {
+        showError("Incorrect email or password. Please try again.");
+
+        passwordInput.value = "";
+        passwordInput.focus();
+      }
+    });
+
+    logoutButton.addEventListener("click", function () {
+      dashboard.hidden = true;
+      loginForm.hidden = false;
+
+      loginForm.reset();
+      showError("");
+      emailInput.focus();
+    });
+  </script>
+
+</body>
+</html>
