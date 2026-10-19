@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to your Recipe Planner account.">
+  <title>Recipe Planner | Login</title>
+  <link rel="stylesheet" href="login.css">
+  <script src="login.js" defer></script>
+</head>
+<body>
+  <main class="page-container">
+    <section class="login-card" aria-labelledby="page-title">
+      <div class="logo" aria-hidden="true">🍲</div>
+
+      <h1 id="page-title">Recipe Planner</h1>
+      <p class="subtitle">Your next delicious meal starts here.</p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="alex@example.com"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <p id="error-message" class="error-message" role="alert" aria-live="polite"></p>
+
+        <button type="submit" id="login-button">Sign In</button>
+      </form>
+
+      <section id="dashboard" hidden aria-live="polite">
+        <h2 id="welcome-message">Welcome!</h2>
+        <p>You have successfully signed in.</p>
+        <button type="button" id="logout-button" class="secondary-button">
+          Log Out
+        </button>
+      </section>
+
+      <p class="demo-note">
+        Demo account: alex@example.com / recipe123
+      </p>
+    </section>
+  </main>
+</body>
+</html>
