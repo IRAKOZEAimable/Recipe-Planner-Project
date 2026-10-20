@@ -45,11 +45,31 @@
             0
         </p>
 
-        <p>Above are statistics</p>
     </div>
 
     <!-- JAVASCRIPT PART -->
     <script>
+        const recipes = [
+        {
+            name: "Jollof Rice",
+            prepTime: 30,
+            calories: 450,
+            isVegetarian: false
+        },
+        {
+            name: "Veggie Stir Fry",
+            prepTime: 20,
+            calories: 300,
+            isVegetarian: true
+        },
+        {
+            name: "Fruit Salad",
+            prepTime: 10,
+            calories: 150,
+            isVegetarian: true
+        }
+    ];
+
         function updateStatistics(recipes) {
 
             // step1: calculate all three totals using reduce
@@ -77,10 +97,23 @@
 
         if (recipes.length > 0) {
             averagePrepTime = totals.totalPrepTime / recipes.length;
-        }    
+        }   
+        
+        // step 3: display the results in html
+        document.getElementById("average-prep-time").textContent =
+            averagePrepTime.toFixed(1);
+
+        document.getElementById("total-calories").textContent =
+            totals.totalCalories.toLocaleString();
+
+        document.getElementById("vegetarian-count").textContent =
+            totals.vegetarianCount;
         }
 
-        // showing js in browser
+
+        
+
+
         
     </script>
 
