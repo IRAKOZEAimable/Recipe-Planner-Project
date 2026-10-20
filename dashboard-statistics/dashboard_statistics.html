@@ -44,6 +44,8 @@
            class="text-3xl font-bold text-gray-800 mt-2">
             0
         </p>
+
+        <p>Above are statistics</p>
     </div>
 
     <!-- JAVASCRIPT PART -->
@@ -70,7 +72,16 @@
                 totalCalories: 0,
                 vegetarianCount: 0
             });
+        
+        // step 2: calculate average safely
+
+        if (recipes.length > 0) {
+            averagePrepTime = totals.totalPrepTime / recipes.length;
+        }    
         }
+
+        // showing js in browser
+        
     </script>
 
 </section>
