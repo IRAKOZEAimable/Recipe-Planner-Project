@@ -6,6 +6,46 @@
     <title>Document</title>
 </head>
 <body>
+        <script>
+    let recipes = [
+      { name: "Oatmeal with Banana", category: "Breakfast", prepTime: 10, calories: 280, isVegetarian: true },
+      { name: "Vegetable Omelette", category: "Breakfast", prepTime: 15, calories: 320, isVegetarian: false },
+      { name: "Pancakes", category: "Breakfast", prepTime: 20, calories: 410, isVegetarian: true },
+      { name: "Avocado Toast", category: "Breakfast", prepTime: 8, calories: 250, isVegetarian: true },
+      { name: "Chicken Salad", category: "Lunch", prepTime: 25, calories: 390, isVegetarian: false },
+      { name: "Jollof Rice", category: "Lunch", prepTime: 40, calories: 520, isVegetarian: true },
+      { name: "Bean Burrito", category: "Lunch", prepTime: 20, calories: 430, isVegetarian: true },
+      { name: "Grilled Fish", category: "Dinner", prepTime: 30, calories: 360, isVegetarian: false },
+      { name: "Vegetable Stir Fry", category: "Dinner", prepTime: 20, calories: 310, isVegetarian: true },
+      { name: "Beef Stew", category: "Dinner", prepTime: 55, calories: 480, isVegetarian: false },
+      { name: "Lentil Curry", category: "Dinner", prepTime: 35, calories: 400, isVegetarian: true },
+      { name: "Fruit Salad", category: "Snack", prepTime: 10, calories: 150, isVegetarian: true },
+      { name: "Yogurt Parfait", category: "Snack", prepTime: 5, calories: 220, isVegetarian: true },
+      { name: "Chicken Sandwich", category: "Snack", prepTime: 12, calories: 340, isVegetarian: false },
+      { name: "Roasted Nuts", category: "Snack", prepTime: 10, calories: 180, isVegetarian: true }
+    ];
+    </script>
 
+    <script>
+
+function displayRecipes(recipeList) {
+    const container = document.getElementById("recipeContainer");
+
+    container.innerHTML = recipeList.map(recipe => `
+        <div class="recipe-card">
+            <h2>${recipe.name}</h2>
+            <p>Category: ${recipe.category}</p>
+            <p>Preparation Time: ${recipe.prepTime} minutes</p>
+            <p>Calories: ${recipe.calories} kcal</p>
+            <p>Vegetarian: ${recipe.isVegetarian ? "Yes" : "No"}</p>
+        </div>
+    `).join("");
+}
+
+// Display all recipes
+displayRecipes(recipes);
+</script>
+
+ 
 </body>
 </html>
