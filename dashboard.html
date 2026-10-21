@@ -182,7 +182,7 @@
 
                 <form
                     id="add-recipe-form"
-                    class="grid gap-4 md:grid-cols-3 md:items-end"
+                    class="grid gap-4 sm:grid-cols-2 sm:items-end lg:grid-cols-4"
                 >
                     <div class="flex flex-col gap-1">
                         <label for="recipe-name" class="text-sm">
@@ -229,9 +229,24 @@
                         >
                     </div>
 
+                    <div class="flex flex-col gap-1">
+                        <label for="recipe-calories" class="text-sm">
+                            Calories
+                        </label>
+                        <input
+                            id="recipe-calories"
+                            name="recipeCalories"
+                            type="number"
+                            min="0"
+                            required
+                            placeholder="Example: 350"
+                            class="min-h-11 rounded-md border border-gray-300 bg-white px-3 text-[#3D2C29] placeholder:text-[#6B5A50] focus:outline-none focus:ring-2 focus:ring-[#4F7F58]"
+                        >
+                    </div>
+
                     <label
                         for="recipe-vegetarian"
-                        class="flex min-h-11 cursor-pointer items-center gap-2 md:col-span-3"
+                        class="flex min-h-11 cursor-pointer items-center gap-2 sm:col-span-2 lg:col-span-4"
                     >
                         <input
                             id="recipe-vegetarian"
@@ -244,7 +259,7 @@
 
                     <p
                         id="add-recipe-error"
-                        class="rounded-md bg-red-100 px-3 py-2 text-sm font-medium text-red-700 md:col-span-3"
+                        class="rounded-md bg-red-100 px-3 py-2 text-sm font-medium text-red-700 sm:col-span-2 lg:col-span-4"
                         role="alert"
                         aria-live="polite"
                         hidden
@@ -252,7 +267,7 @@
 
                     <button
                         type="submit"
-                        class="min-h-11 cursor-pointer rounded-md border-0 bg-[#B5523A] px-5 py-2 font-medium text-[#FFF8F0] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-[#4F7F58] focus:ring-offset-2 md:col-span-3 md:justify-self-start"
+                        class="min-h-11 cursor-pointer rounded-md border-0 bg-[#B5523A] px-5 py-2 font-medium text-[#FFF8F0] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-[#4F7F58] focus:ring-offset-2 sm:col-span-2 sm:justify-self-start lg:col-span-4"
                     >
                         Add recipe
                     </button>
@@ -329,6 +344,8 @@
             document.getElementById("recipe-category");
         const recipePrepTimeInput =
             document.getElementById("recipe-prep-time");
+        const recipeCaloriesInput =
+            document.getElementById("recipe-calories");
         const recipeVegetarianInput =
             document.getElementById("recipe-vegetarian");
         const addRecipeError =
@@ -484,15 +501,18 @@
             const name = recipeNameInput.value.trim();
             const category = recipeCategoryInput.value;
             const prepTime = Number(recipePrepTimeInput.value);
+            const calories = Number(recipeCaloriesInput.value);
             const isVegetarian = recipeVegetarianInput.checked;
 
             if (
                 name === "" ||
                 Number.isFinite(prepTime) === false ||
-                prepTime < 1
+                prepTime < 1 ||
+                Number.isFinite(calories) === false ||
+                calories < 0
             ) {
                 showAddRecipeError(
-                    "Enter a recipe name and a prep time above 0."
+                    "Enter a name, a prep time above 0, and calories of 0 or more."
                 );
                 return;
             }
@@ -501,7 +521,7 @@
                 name: name,
                 category: category,
                 prepTime: prepTime,
-                calories: 0,
+                calories: calories,
                 isVegetarian: isVegetarian
             };
 
