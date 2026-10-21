@@ -172,6 +172,93 @@
                 </label>
             </section>
 
+            <section
+                class="rounded-lg bg-[#FFF8F0] p-4 shadow-sm"
+                aria-labelledby="add-recipe-heading"
+            >
+                <h2 id="add-recipe-heading" class="mb-3 text-xl font-semibold">
+                    Add a new recipe
+                </h2>
+
+                <form
+                    id="add-recipe-form"
+                    class="grid gap-4 md:grid-cols-3 md:items-end"
+                >
+                    <div class="flex flex-col gap-1">
+                        <label for="recipe-name" class="text-sm">
+                            Name
+                        </label>
+                        <input
+                            id="recipe-name"
+                            name="recipeName"
+                            type="text"
+                            required
+                            placeholder="Recipe name"
+                            class="min-h-11 rounded-md border border-gray-300 bg-white px-3 text-[#3D2C29] placeholder:text-[#6B5A50] focus:outline-none focus:ring-2 focus:ring-[#4F7F58]"
+                        >
+                    </div>
+
+                    <div class="flex flex-col gap-1">
+                        <label for="recipe-category" class="text-sm">
+                            Category
+                        </label>
+                        <select
+                            id="recipe-category"
+                            name="recipeCategory"
+                            class="min-h-11 rounded-md border border-gray-300 bg-white px-3 text-[#3D2C29] focus:outline-none focus:ring-2 focus:ring-[#4F7F58]"
+                        >
+                            <option value="Breakfast">Breakfast</option>
+                            <option value="Lunch">Lunch</option>
+                            <option value="Dinner">Dinner</option>
+                            <option value="Snack">Snack</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-1">
+                        <label for="recipe-prep-time" class="text-sm">
+                            Prep time (minutes)
+                        </label>
+                        <input
+                            id="recipe-prep-time"
+                            name="recipePrepTime"
+                            type="number"
+                            min="1"
+                            required
+                            placeholder="Example: 20"
+                            class="min-h-11 rounded-md border border-gray-300 bg-white px-3 text-[#3D2C29] placeholder:text-[#6B5A50] focus:outline-none focus:ring-2 focus:ring-[#4F7F58]"
+                        >
+                    </div>
+
+                    <label
+                        for="recipe-vegetarian"
+                        class="flex min-h-11 cursor-pointer items-center gap-2 md:col-span-3"
+                    >
+                        <input
+                            id="recipe-vegetarian"
+                            name="recipeVegetarian"
+                            type="checkbox"
+                            class="h-5 w-5 accent-[#4F7F58]"
+                        >
+                        Vegetarian recipe
+                    </label>
+
+                    <p
+                        id="add-recipe-error"
+                        class="rounded-md bg-red-100 px-3 py-2 text-sm font-medium text-red-700 md:col-span-3"
+                        role="alert"
+                        aria-live="polite"
+                        hidden
+                    ></p>
+
+                    <button
+                        type="submit"
+                        class="min-h-11 cursor-pointer rounded-md border-0 bg-[#B5523A] px-5 py-2 font-medium text-[#FFF8F0] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-[#4F7F58] focus:ring-offset-2 md:col-span-3 md:justify-self-start"
+                    >
+                        Add recipe
+                    </button>
+                </form>
+            </section>
+
             <section aria-labelledby="recipes-heading">
                 <h2 id="recipes-heading" class="mb-3 text-xl font-semibold">
                     Recipes (<span id="resultCount">0</span>)
@@ -236,6 +323,16 @@
         const vegetarianFilter = document.getElementById("vegetarianFilter");
         const recipeList = document.getElementById("recipeList");
         const resultCount = document.getElementById("resultCount");
+        const addRecipeForm = document.getElementById("add-recipe-form");
+        const recipeNameInput = document.getElementById("recipe-name");
+        const recipeCategoryInput =
+            document.getElementById("recipe-category");
+        const recipePrepTimeInput =
+            document.getElementById("recipe-prep-time");
+        const recipeVegetarianInput =
+            document.getElementById("recipe-vegetarian");
+        const addRecipeError =
+            document.getElementById("add-recipe-error");
 
         function showError(message) {
             errorMessage.textContent = message;
@@ -310,6 +407,15 @@
                 totals.vegetarianCount;
         }
 
+        function escapeHtml(text) {
+            return text
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
         function displayRecipes(recipesToDisplay) {
             resultCount.textContent = recipesToDisplay.length;
 
@@ -327,12 +433,16 @@
                     ? '<p class="mt-1 text-sm font-medium text-[#2F5D3A]">Vegetarian</p>'
                     : "";
 
+                const calorieText = recipe.calories > 0
+                    ? " · " + recipe.calories + " kcal"
+                    : "";
+
                 return `
                     <article class="flex flex-col gap-1 rounded-lg bg-[#FFF8F0] p-4 shadow-sm">
-                        <h3 class="text-lg font-semibold">${recipe.name}</h3>
+                        <h3 class="text-lg font-semibold">${escapeHtml(recipe.name)}</h3>
                         <p class="text-sm text-[#6B5A50]">${recipe.category}</p>
                         <p class="mt-2 text-sm">
-                            ${recipe.prepTime} min · ${recipe.calories} kcal
+                            ${recipe.prepTime} min${calorieText}
                         </p>
                         ${vegetarianLabel}
                     </article>
@@ -362,6 +472,51 @@
 
             displayRecipes(filteredRecipes);
         }
+
+        function showAddRecipeError(message) {
+            addRecipeError.textContent = message;
+            addRecipeError.hidden = message === "";
+        }
+
+        addRecipeForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = recipeNameInput.value.trim();
+            const category = recipeCategoryInput.value;
+            const prepTime = Number(recipePrepTimeInput.value);
+            const isVegetarian = recipeVegetarianInput.checked;
+
+            if (
+                name === "" ||
+                Number.isFinite(prepTime) === false ||
+                prepTime < 1
+            ) {
+                showAddRecipeError(
+                    "Enter a recipe name and a prep time above 0."
+                );
+                return;
+            }
+
+            const newRecipe = {
+                name: name,
+                category: category,
+                prepTime: prepTime,
+                calories: 0,
+                isVegetarian: isVegetarian
+            };
+
+            recipes.push(newRecipe);
+            addRecipeForm.reset();
+            showAddRecipeError("");
+
+            searchInput.value = "";
+            categoryFilter.value = "All";
+            vegetarianFilter.checked = false;
+
+            updateStatistics(recipes);
+            filterRecipes();
+            recipeNameInput.focus();
+        });
 
         searchInput.addEventListener("input", filterRecipes);
         categoryFilter.addEventListener("change", filterRecipes);
