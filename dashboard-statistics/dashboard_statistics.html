@@ -3,120 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe-Planner</title>
+    <title>Recipe Planner | Dashboard Statistics</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <!-- Dashboard Statistics -->
-<section class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-8">
 
-    <!-- Average Preparation Time -->
-    <div class="bg-white rounded-xl shadow p-6">
-        <h3 class="text-gray-500 text-sm font-medium">
-            Average Prep Time
-        </h3>
+<body class="min-h-screen bg-slate-100 p-6 text-slate-800">
+    <main class="mx-auto max-w-5xl">
+        <h1 class="mb-6 text-3xl font-bold">Dashboard Statistics</h1>
 
-        <p class="text-3xl font-bold text-gray-800 mt-2">
-            <span id="average-prep-time">0</span>
-            <span class="text-lg font-normal">min</span>
-        </p>
-    </div>
+        <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="rounded-xl bg-white p-6 shadow">
+                <h2 class="text-sm font-medium text-gray-500">
+                    Average Prep Time
+                </h2>
 
-    <!-- Total Calories -->
-    <div class="bg-white rounded-xl shadow p-6">
-        <h3 class="text-gray-500 text-sm font-medium">
-            Total Calories
-        </h3>
+                <p class="mt-2 text-3xl font-bold text-gray-800">
+                    <span id="average-prep-time">0</span>
+                    <span class="text-lg font-normal">min</span>
+                </p>
+            </div>
 
-        <p id="total-calories"
-           class="text-3xl font-bold text-gray-800 mt-2">
-            0
-        </p>
-    </div>
+            <div class="rounded-xl bg-white p-6 shadow">
+                <h2 class="text-sm font-medium text-gray-500">
+                    Total Calories
+                </h2>
 
-    <!-- Vegetarian Recipes -->
-    <div class="bg-white rounded-xl shadow p-6">
-        <h3 class="text-gray-500 text-sm font-medium">
-            Vegetarian Recipes
-        </h3>
+                <p id="total-calories" class="mt-2 text-3xl font-bold text-gray-800">
+                    0
+                </p>
+            </div>
 
-        <p id="vegetarian-count"
-           class="text-3xl font-bold text-gray-800 mt-2">
-            0
-        </p>
+            <div class="rounded-xl bg-white p-6 shadow">
+                <h2 class="text-sm font-medium text-gray-500">
+                    Vegetarian Recipes
+                </h2>
 
-    </div>
+                <p id="vegetarian-count" class="mt-2 text-3xl font-bold text-gray-800">
+                    0
+                </p>
+            </div>
+        </section>
+    </main>
 
-    <!-- JAVASCRIPT PART -->
     <script>
         const recipes = [
-        {
-            name: "Jollof Rice",
-            prepTime: 30,
-            calories: 450,
-            isVegetarian: false
-        },
-        {
-            name: "Veggie Stir Fry",
-            prepTime: 20,
-            calories: 300,
-            isVegetarian: true
-        },
-        {
-            name: "Fruit Salad",
-            prepTime: 10,
-            calories: 150,
-            isVegetarian: true
-        }
-    ];
+            {
+                name: "Jollof Rice",
+                prepTime: 30,
+                calories: 450,
+                isVegetarian: false
+            },
+            {
+                name: "Veggie Stir Fry",
+                prepTime: 20,
+                calories: 300,
+                isVegetarian: true
+            },
+            {
+                name: "Fruit Salad",
+                prepTime: 10,
+                calories: 150,
+                isVegetarian: true
+            }
+        ];
 
-        function updateStatistics(recipes) {
+        function updateStatistics(recipeList) {
+            const totals = recipeList.reduce(function (accumulator, recipe) {
+                accumulator.totalPrepTime =
+                    accumulator.totalPrepTime + recipe.prepTime;
 
-            // step1: calculate all three totals using reduce
-            const totals = recipes.reduce(function(accumulator, recipe) {
-                // Add preparation time
-                accumulator.totalPrepTime = accumulator.totalPrepTime + accumulator.prepTime;
+                accumulator.totalCalories =
+                    accumulator.totalCalories + recipe.calories;
 
-                // Add calories
-                accumulator.totalCalories = accumulator.totalCalories + accumulator.calories;
-
-                // count vegetarian recipes
                 if (recipe.isVegetarian === true) {
-                    accumulator.vegetarianCount = accumulator.vegetarianCount + 1;
+                    accumulator.vegetarianCount =
+                        accumulator.vegetarianCount + 1;
                 }
 
-                return accumulator
-
+                return accumulator;
             }, {
                 totalPrepTime: 0,
                 totalCalories: 0,
                 vegetarianCount: 0
             });
-        
-        // step 2: calculate average safely
 
-        if (recipes.length > 0) {
-            averagePrepTime = totals.totalPrepTime / recipes.length;
-        }   
-        
-        // step 3: display the results in html
-        document.getElementById("average-prep-time").textContent =
-            averagePrepTime.toFixed(1);
+            let averagePrepTime = 0;
 
-        document.getElementById("total-calories").textContent =
-            totals.totalCalories.toLocaleString();
+            if (recipeList.length > 0) {
+                averagePrepTime =
+                    totals.totalPrepTime / recipeList.length;
+            }
 
-        document.getElementById("vegetarian-count").textContent =
-            totals.vegetarianCount;
+            document.getElementById("average-prep-time").textContent =
+                averagePrepTime.toFixed(1);
+
+            document.getElementById("total-calories").textContent =
+                totals.totalCalories.toLocaleString();
+
+            document.getElementById("vegetarian-count").textContent =
+                totals.vegetarianCount;
         }
 
-
-        
-
-
-        
+        updateStatistics(recipes);
     </script>
-
-</section>
 </body>
 </html>
