@@ -5,121 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Sign in to your Recipe Planner account.">
   <title>Recipe Planner | Login</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="min-h-screen bg-emerald-50 font-sans text-slate-800">
+<body class="min-h-screen bg-[url('recipie.jpg')] bg-cover bg-center bg-no-repeat font-['Poppins'] text-[#3D2C29]">
+  <main class="flex min-h-screen flex-col items-center justify-center gap-10 bg-black/10 px-6 py-10 md:flex-row md:justify-between md:px-12 lg:px-20">
+    <div class="flex w-full max-w-xl flex-col font-['Playfair_Display'] text-6xl leading-none drop-shadow-sm sm:text-7xl lg:text-[90px]">
+      <span>Recipe</span>
+      <span class="self-end">Planner</span>
+    </div>
 
-  <main class="flex min-h-screen items-center justify-center px-4 py-10">
-    <section class="w-full max-w-md rounded-3xl bg-white p-8 shadow-xl shadow-emerald-900/10 sm:p-10">
-
-      <div class="mb-5 flex justify-center">
-        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-4xl">
-          🍲
-        </div>
-      </div>
-
-      <h1 class="text-center text-3xl font-extrabold tracking-tight text-emerald-900">
-        Recipe Planner
+    <section class="w-full max-w-sm shrink-0 rounded-2xl bg-[#FFF8F0] p-6 shadow-xl shadow-black/20" aria-labelledby="login-heading">
+      <h1 id="login-heading" class="mb-4 text-center font-['Playfair_Display'] text-4xl">
+        Login
       </h1>
 
-      <p class="mt-3 text-center text-sm leading-6 text-slate-500">
-        Your next delicious meal starts here.
-      </p>
-
-      <form id="login-form" class="mt-8 space-y-5">
-
-        <div>
-          <label for="email" class="mb-2 block text-sm font-semibold text-slate-700">
-            Email address
-          </label>
-
+      <form id="login-form" class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1">
+          <label for="email" class="text-lg">Email:</label>
           <input
-            type="email"
             id="email"
             name="email"
-            placeholder="alex@example.com"
-            autocomplete="username"
+            type="email"
             required
-            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+            autocomplete="username"
+            placeholder="Enter your email"
+            class="w-full rounded-lg bg-gray-200 px-3 py-2 placeholder:text-[#7A675C] focus:outline-none focus:ring-2 focus:ring-[#4F7F58]"
           >
         </div>
 
-        <div>
-          <label for="password" class="mb-2 block text-sm font-semibold text-slate-700">
-            Password
-          </label>
-
+        <div class="flex flex-col gap-1">
+          <label for="password" class="text-lg">Password:</label>
           <input
-            type="password"
             id="password"
             name="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
+            type="password"
             required
-            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+            autocomplete="current-password"
+            placeholder="Enter your password"
+            class="w-full rounded-lg bg-gray-200 px-3 py-2 placeholder:text-[#7A675C] focus:outline-none focus:ring-2 focus:ring-[#4F7F58]"
           >
         </div>
 
         <p
           id="error-message"
+          class="hidden rounded-lg bg-red-100 px-3 py-2 text-sm font-medium text-red-700"
           role="alert"
           aria-live="polite"
-          class="hidden rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
         ></p>
 
         <button
           type="submit"
-          class="w-full rounded-xl bg-emerald-700 px-4 py-3.5 font-bold text-white shadow-lg shadow-emerald-700/20 transition hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200 active:scale-[0.99]"
+          class="mt-2 cursor-pointer self-center rounded-full bg-[#E07A5F] px-8 py-2 text-lg font-medium transition hover:bg-[#C9654B] focus:outline-none focus:ring-2 focus:ring-[#4F7F58] focus:ring-offset-2 active:scale-95"
         >
-          Sign In
+          Login
         </button>
       </form>
 
-      <section
-        id="dashboard"
-        hidden
-        aria-live="polite"
-        class="mt-8 rounded-2xl border border-emerald-100 bg-emerald-50 p-6 text-center"
-      >
-        <div class="mb-3 text-4xl">👋</div>
-
-        <h2 id="welcome-message" class="text-xl font-bold text-emerald-900">
+      <section id="dashboard" class="text-center" aria-live="polite" hidden>
+        <div class="mb-3 text-5xl" aria-hidden="true">👋</div>
+        <h2 id="welcome-message" class="font-['Playfair_Display'] text-3xl">
           Welcome!
         </h2>
-
-        <p class="mt-2 text-sm leading-6 text-slate-600">
+        <p class="mt-3 text-sm leading-6 text-[#7A675C]">
           You have successfully signed in to Recipe Planner.
         </p>
-
         <button
-          type="button"
           id="logout-button"
-          class="mt-5 w-full rounded-xl border border-emerald-700 px-4 py-3 font-semibold text-emerald-800 transition hover:bg-emerald-100 focus:outline-none focus:ring-4 focus:ring-emerald-200"
+          type="button"
+          class="mt-5 cursor-pointer rounded-full border-2 border-[#4F7F58] px-7 py-2 font-medium transition hover:bg-[#4F7F58] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#4F7F58] focus:ring-offset-2 active:scale-95"
         >
           Log Out
         </button>
       </section>
 
-      <div class="mt-8 rounded-xl bg-slate-50 p-4">
-        <p class="text-center text-xs font-bold uppercase tracking-wider text-slate-500">
-          Demo account
-        </p>
-
-        <p class="mt-2 text-center text-sm text-slate-600">
-          Email: alex@example.com
-        </p>
-
-        <p class="mt-1 text-center text-sm text-slate-600">
-          Password: recipe123
-        </p>
+      <div id="demo-account" class="mt-6 border-t border-[#DCCFC3] pt-4 text-center text-xs text-[#7A675C]">
+        <p class="font-semibold uppercase tracking-wider">Demo account</p>
+        <p class="mt-1">alex@example.com / recipe123</p>
       </div>
-
-      <p class="mt-6 text-center text-xs text-slate-400">
-        © 2026 Recipe Planner. Plan meals, eat better.
-      </p>
-
     </section>
   </main>
 
@@ -151,6 +115,7 @@
     const dashboard = document.getElementById("dashboard");
     const welcomeMessage = document.getElementById("welcome-message");
     const logoutButton = document.getElementById("logout-button");
+    const demoAccount = document.getElementById("demo-account");
 
     function showError(message) {
       errorMessage.textContent = message;
@@ -169,28 +134,27 @@
 
       if (matchedUser) {
         showError("");
-
         welcomeMessage.textContent = "Welcome, " + matchedUser.name + "!";
-
         loginForm.hidden = true;
+        demoAccount.hidden = true;
         dashboard.hidden = false;
-      } else {
-        showError("Incorrect email or password. Please try again.");
-
-        passwordInput.value = "";
-        passwordInput.focus();
+        logoutButton.focus();
+        return;
       }
+
+      showError("Incorrect email or password. Please try again.");
+      passwordInput.value = "";
+      passwordInput.focus();
     });
 
     logoutButton.addEventListener("click", function () {
       dashboard.hidden = true;
       loginForm.hidden = false;
-
+      demoAccount.hidden = false;
       loginForm.reset();
       showError("");
       emailInput.focus();
     });
   </script>
-
 </body>
 </html>
